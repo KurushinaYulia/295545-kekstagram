@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Юлия Курушина](https://up.htmlacademy.ru/javascript/8/user/295545).
-* Наставник: `Неизвестно`.
+* Наставник: Денис Корнейчук.
 
 ---
 
