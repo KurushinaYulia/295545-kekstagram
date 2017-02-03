@@ -23,12 +23,23 @@ uploadFormCancel.addEventListener('click', function(){
 });
 
 // смена фильтра
-var uploadFilter = document.querySelector('.upload-filter');
 var imagePreview = document.querySelector('.filter-image-preview');
+var filterControls = document.querySelector('.upload-filter-controls');
+var currentFilter = null;
 
-uploadFilter.addEventListener('click', function(){
-  imagePreview.classList.add('.filter-chrome');
-});
+function processFilterSelect(event) {
+    if(event.target.type === 'radio' && event.target.name === 'upload-filter' && event.target.value !== currentFilter) {
+    if(currentFilter && currentFilter !== 'none') {
+      imagePreview.classList.remove('filter-' + currentFilter);
+    }
+    currentFilter = event.target.value;
+    if(currentFilter !== 'none') {
+      imagePreview.classList.add('filter-' + currentFilter);
+    }
+  }
+}
+
+filterControls.addEventListener('click', processFilterSelect);
 
 // изменение масштаба
 var buttonInc = document.querySelector('.upload-resize-controls-button-inc');
@@ -37,13 +48,26 @@ var buttonDec = document.querySelector('.upload-resize-controls-button-dec');
 //  при нажатии на кнопки должно изменяться значение поля:
 var uploadResizeControlsValue = document.querySelector('.upload-resize-controls-value');
 
+var currentScaleValue = 100;
+
+var MAX_IMAGE_SIZE = 100;
+var MIN_IMAGE_SIZE = 25;
+var IMAGE_RESIZE_STEP = 25;
+
+function changeImgSize(modifier) {
+  var newValue = currentScaleValue + modifier;
+  if(newValue <= MAX_IMAGE_SIZE && newValue >= MIN_IMAGE_SIZE) {
+    uploadResizeControlsValue.value = newValue + '%';
+    imagePreview.style = 'transform:scale('+newValue / 100+')';
+  }
+}
+
 buttonInc.addEventListener('click', function(){
-  uploadResizeControlsValue.value('75');
-  uploadResizeControlsValue.classList.add('transform:scale(0.75)');
+  changeImgSize( + IMAGE_RESIZE_STEP );
 });
+
 buttonDec.addEventListener('click', function(){
-  uploadResizeControlsValue.value('25');
-  uploadResizeControlsValue.classList.add('transform:scale(0.25)');
+  changeImgSize( - IMAGE_RESIZE_STEP );
 });
 
 
