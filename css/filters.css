@@ -1,0 +1,12 @@
+.upload-filter-label-phobos .upload-filter-preview,
+.filter-phobos {
+  -webkit-filter: blur(5px);  
+          filter: blur(5px);  
+}
+
+.upload-filter-label-heat .upload-filter-preview,
+.filter-heat {
+  -webkit-filter: contrast(200%);
+          filter: contrast(200%);
+}
+
