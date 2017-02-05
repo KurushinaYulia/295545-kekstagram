@@ -22,6 +22,23 @@ uploadFormCancel.addEventListener('click', function () {
   uploadSelectImage.classList.remove('invisible');
 });
 
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
+
+uploadFormCancel.addEventListener('keydown', function (evt) {
+  if (evt.keyCode && evt.keyCode === ENTER_KEY_CODE) {
+    uploadOverlay.classList.add('invisible');
+    uploadSelectImage.classList.remove('invisible');
+  }
+});
+
+uploadOverlay.addEventListener('keydown', function (evt) {
+  if (evt.keyCode && evt.keyCode === ESCAPE_KEY_CODE) {
+    uploadOverlay.classList.add('invisible');
+    uploadSelectImage.classList.remove('invisible');
+  }
+});
+
 // смена фильтра
 var imagePreview = document.querySelector('.filter-image-preview');
 var filterControls = document.querySelector('.upload-filter-controls');
@@ -40,6 +57,12 @@ function processFilterSelect(event) {
 }
 
 filterControls.addEventListener('click', processFilterSelect);
+
+filterControls.addEventListener('keydown', function (evt){
+  if (evt.keyCode && evt.keyCode === ENTER_KEY_CODE) {
+    processFilterSelect();
+  }	
+});
 
 // изменение масштаба
 var buttonInc = document.querySelector('.upload-resize-controls-button-inc');
