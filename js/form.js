@@ -20,7 +20,7 @@ var uploadFormCancel = document.querySelector('.upload-form-cancel');
 var imagePreview = document.querySelector('.filter-image-preview');
 var filterControls = document.querySelector('.upload-filter-controls');
 var filterPresetsElements = filterControls.querySelectorAll('input[type=radio]');
-var currentFilter = 'none'; //изменил значение по умолчанию
+var currentFilter = 'none';
 
 // кнопки изменения масштаба
 var buttonInc = document.querySelector('.upload-resize-controls-button-inc');
@@ -33,8 +33,6 @@ var currentScaleValue = 100;
 var MAX_IMAGE_SIZE = 100;
 var MIN_IMAGE_SIZE = 25;
 var IMAGE_RESIZE_STEP = 25;
-
-
 
 
 // при изменении значения поля загрузки фотографий открывается форма кадрирования
@@ -58,71 +56,70 @@ uploadFormCancel.addEventListener('keydown', function (evt) {
 });
 
 // смена фильтра
-function chooseNeighboringFilter(filtersList, direction) { //direction: отрицательные - влево, положительные и ноль - вправо
-	var normalizedDirection = direction < 0 ? -1 : 1; //приведем аргумент direction к одному из значений
-	var checkedElementIndex = 0;
-	
-	for(var i = 0; i < filtersList.length; i++) { //находим индекс в массиве выбранного элемента
-		if(filtersList[i].checked) {
-			checkedElementIndex = i;
-			break;
-		}
-	}
-	checkedElementIndex += normalizedDirection;
-	if (checkedElementIndex < 0) {
-		checkedElementIndex = filtersList.length - 1;
-	} else if (checkedElementIndex >= filtersList.length) {
-		checkedElementIndex = 0;
-	}
-	
-	filtersList[checkedElementIndex].click();
+function chooseNeighboringFilter(filtersList, direction) {
+  var normalizedDirection = direction < 0 ? -1 : 1;
+  var checkedElementIndex = 0;
+
+  for (var i = 0; i < filtersList.length; i++) {
+    if (filtersList[i].checked) {
+      checkedElementIndex = i;
+      break;
+    }
+  }
+  checkedElementIndex += normalizedDirection;
+  if (checkedElementIndex < 0) {
+    checkedElementIndex = filtersList.length - 1;
+  } else if (checkedElementIndex >= filtersList.length) {
+    checkedElementIndex = 0;
+  }
+
+  filtersList[checkedElementIndex].click();
 }
 
-function setAriaPressedStatusByFilterName(filterName, status = false) {
-	document.querySelector('input[value="'+filterName+'"]').labels[0].setAttribute('aria-pressed',status);
+function setAriaPressedStatusByFilterName(filterName) {
+  document.querySelector('input[value="' + filterName + '"]').labels[0].setAttribute('aria-pressed', status);
 }
 
 function processFilterSelect(event) {
   if (event.target.type === 'radio' && event.target.name === 'upload-filter' && event.target.value !== currentFilter) {
-    if (currentFilter !== 'none') { //и тут убрал лишнее условие, если значение по умолчанию null уже быть не может
+    if (currentFilter !== 'none') {
       imagePreview.classList.remove('filter-' + currentFilter);
     }
-	setAriaPressedStatusByFilterName(currentFilter, false);
-	currentFilter = event.target.value;;
+    setAriaPressedStatusByFilterName(currentFilter, false);
+    currentFilter = event.target.value;
     if (currentFilter !== 'none') {
       imagePreview.classList.add('filter-' + currentFilter);
-    }	
-	setAriaPressedStatusByFilterName(currentFilter, true);
+    }
+    setAriaPressedStatusByFilterName(currentFilter, true);
   }
-	
+
 }
 
 filterControls.addEventListener('click', processFilterSelect);
 
 function formKeysProcessing(evt) {
-	switch(evt.keyCode) {
-		case ENTER_KEY_CODE : 
-			if(evt.target.classList.contains('upload-filter-label')) {
-				evt.target.control.click();
-			}
-			break;
-		case ESCAPE_KEY_CODE :
-			uploadOverlay.classList.add('invisible');
-    		uploadSelectImage.classList.remove('invisible');
-			window.removeEventListener('keydown',formKeysProcessing);
-			break;
-		case 37 : //лево
-			chooseNeighboringFilter(filterPresetsElements, -1);
-			break;
-			
-		case 39 : //вправо
-			chooseNeighboringFilter(filterPresetsElements, 1);
-			break;
-	}
+  switch (evt.keyCode) {
+    case ENTER_KEY_CODE :
+      if (evt.target.classList.contains('upload-filter-label')) {
+        evt.target.control.click();
+      }
+      break;
+    case ESCAPE_KEY_CODE :
+      uploadOverlay.classList.add('invisible');
+      uploadSelectImage.classList.remove('invisible');
+      window.removeEventListener('keydown', formKeysProcessing);
+      break;
+    case LEFT_ARROW_KEY_CODE :
+      chooseNeighboringFilter(filterPresetsElements, -1);
+      break;
+    case RIGHT_ARROW_KEY_CODE :
+      chooseNeighboringFilter(filterPresetsElements, 1);
+      break;
+  }
 }
 
 function setFormKeysProcessingUp() {
-	window.addEventListener('keydown', formKeysProcessing);
+  window.addEventListener('keydown', formKeysProcessing);
 }
 
 // изменение масштаба
