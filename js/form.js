@@ -16,6 +16,31 @@ var uploadFormCancel = document.querySelector('.upload-form-cancel');
 //  при нажатии на кнопку поля загрузки фоток, должно изменяться значение поля:
 var uploadResizeControlsValue = document.querySelector('.upload-resize-controls-value');
 
+function formKeysProcessing(evt) {
+  switch (evt.keyCode) {
+    case ENTER_KEY_CODE :
+      if (evt.target.classList.contains('upload-filter-label')) {
+        evt.target.control.click();
+      }
+      break;
+    case ESCAPE_KEY_CODE :
+      uploadOverlay.classList.add('invisible');
+      uploadSelectImage.classList.remove('invisible');
+      window.removeEventListener('keydown', formKeysProcessing);
+      break;
+    case LEFT_ARROW_KEY_CODE :
+      //chooseNeighboringFilter(filterPresetsElements, -1); закомментированы временно
+      break;
+    case RIGHT_ARROW_KEY_CODE :
+      //chooseNeighboringFilter(filterPresetsElements, 1);
+      break;
+  }
+}
+
+function setFormKeysProcessingUp() {
+  window.addEventListener('keydown', formKeysProcessing);
+}
+
 // при изменении значения поля загрузки фотографий открывается форма кадрирования
 uploadFile.addEventListener('change', function () {
   uploadOverlay.classList.remove('invisible');
@@ -37,12 +62,13 @@ uploadFormCancel.addEventListener('keydown', function (evt) {
 });
 
 // смена фильтра
+
 initializeFilters(
     document.querySelector('.filter-image-preview'),
-    'upload-filter-label',
+    //'upload-filter-label', уже не нужен
     'upload-filter',
     document.querySelector('.upload-filter-controls'),
-    filterControls.querySelectorAll('input[type=radio]'),
+    document.querySelectorAll('input[type=radio]'),
     'none'
 ); 
 
