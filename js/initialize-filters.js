@@ -5,7 +5,7 @@ var ESCAPE_KEY_CODE = 27;
 var LEFT_ARROW_KEY_CODE = 37;
 var RIGHT_ARROW_KEY_CODE = 39;
 
-var initializeFilters = function(image, targetClassForEnter, targetClassForSelect, filterControls, filterPresetsElements, currentFilter) {
+var initializeFilters = function(image, /*targetClassForEnter,*/ targetClassForSelect, filterControls, filterPresetsElements, currentFilter) {
     
 function chooseNeighboringFilter(filtersList, direction) {
   var normalizedDirection = direction < 0 ? -1 : 1;
@@ -43,35 +43,9 @@ function processFilterSelect(event) {
     }
     setAriaPressedStatusByFilterName(currentFilter, true);
   }
-
 }
 
 filterControls.addEventListener('click', processFilterSelect);
-
-function formKeysProcessing(evt) {
-  switch (evt.keyCode) {
-    case ENTER_KEY_CODE :
-      if (evt.target.classList.contains(targetClassForEnter)) {
-        evt.target.control.click();
-      }
-      break;
-    case ESCAPE_KEY_CODE :
-      uploadOverlay.classList.add('invisible');
-      uploadSelectImage.classList.remove('invisible');
-      window.removeEventListener('keydown', formKeysProcessing);
-      break;
-    case LEFT_ARROW_KEY_CODE :
-      chooseNeighboringFilter(filterPresetsElements, -1);
-      break;
-    case RIGHT_ARROW_KEY_CODE :
-      chooseNeighboringFilter(filterPresetsElements, 1);
-      break;
-  }
-}
-
-function setFormKeysProcessingUp() {
-  window.addEventListener('keydown', formKeysProcessing);
-}
 
 };
 
