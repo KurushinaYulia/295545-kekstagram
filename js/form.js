@@ -63,7 +63,7 @@ uploadFormCancel.addEventListener('keydown', function (evt) {
 });
 
 // смена фильтра
-initializeFilters(
+window.initializeFilters(
     document.querySelector('.filter-image-preview'),
     'upload-filter',
     document.querySelector('.upload-filter-controls'),
@@ -72,7 +72,7 @@ initializeFilters(
 );
 
 // изменение масштаба
-createScale(
+window.createScale(
     document.querySelector('.filter-image-preview'),
     document.querySelector('.upload-resize-controls-button-inc'),
     document.querySelector('.upload-resize-controls-button-dec'),
