@@ -1,5 +1,9 @@
 'use strict';
 
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
+var LEFT_ARROW_KEY_CODE = 37;
+var RIGHT_ARROW_KEY_CODE = 39;
 
 // форма кадрирования
 var uploadOverlay = document.querySelector('.upload-overlay');
@@ -12,9 +16,6 @@ var uploadFile = document.querySelector('#upload-file');
 
 // кнопка-крестик формы кадрирования
 var uploadFormCancel = document.querySelector('.upload-form-cancel');
-
-//  при нажатии на кнопку поля загрузки фоток, должно изменяться значение поля:
-var uploadResizeControlsValue = document.querySelector('.upload-resize-controls-value');
 
 function formKeysProcessing(evt) {
   switch (evt.keyCode) {
@@ -29,10 +30,10 @@ function formKeysProcessing(evt) {
       window.removeEventListener('keydown', formKeysProcessing);
       break;
     case LEFT_ARROW_KEY_CODE :
-      //chooseNeighboringFilter(filterPresetsElements, -1); закомментированы временно
+      // chooseNeighboringFilter(filterPresetsElements, -1);
       break;
     case RIGHT_ARROW_KEY_CODE :
-      //chooseNeighboringFilter(filterPresetsElements, 1);
+      // chooseNeighboringFilter(filterPresetsElements, 1);
       break;
   }
 }
@@ -62,19 +63,21 @@ uploadFormCancel.addEventListener('keydown', function (evt) {
 });
 
 // смена фильтра
-
 initializeFilters(
     document.querySelector('.filter-image-preview'),
-    //'upload-filter-label', уже не нужен
     'upload-filter',
     document.querySelector('.upload-filter-controls'),
     document.querySelectorAll('input[type=radio]'),
     'none'
-); 
+);
 
 // изменение масштаба
 createScale(
     document.querySelector('.filter-image-preview'),
     document.querySelector('.upload-resize-controls-button-inc'),
     document.querySelector('.upload-resize-controls-button-dec'),
-    100, 100, 25, 25);
+    100,
+    100,
+    25,
+    25
+);
