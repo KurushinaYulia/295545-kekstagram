@@ -21,4 +21,6 @@ var createScale = function (image, buttonInc, buttonDec, currentScaleValue, MAX_
     changeImgSize(-IMAGE_RESIZE_STEP);
   });
 
+  window.createScale = createScale;
+
 };

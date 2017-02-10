@@ -1,6 +1,6 @@
 'use strict';
 
-function initializeFilters(image, targetClassForSelect, filterControls, filterPresetsElements, currentFilter) {
+var initializeFilters = function (image, targetClassForSelect, filterControls, filterPresetsElements, currentFilter) {
 //  function chooseNeighboringFilter(filtersList, direction) {
    // var normalizedDirection = direction < 0 ? -1 : 1;
    // var checkedElementIndex = 0;
@@ -41,5 +41,7 @@ function initializeFilters(image, targetClassForSelect, filterControls, filterPr
 
   filterControls.addEventListener('click', processFilterSelect);
 
-}
+  window.initializeFilters = initializeFilters;
+
+};
 
