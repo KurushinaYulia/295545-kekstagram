@@ -40,7 +40,7 @@ window.initializeFilters = (function (image, targetClassForSelect, filterControl
         setAriaPressedStatusByFilterName(currentFilter, true);
       }
     }
-  } // конец объекта
+  }; // конец объекта
   
   return filterControls.addEventListener('click', processFilterSelect);
 
