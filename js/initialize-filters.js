@@ -1,18 +1,17 @@
 'use strict';
 
-window.initializeFilters = (function (image, targetClassForSelect, filterControls, filterPresetsElements, currentFilter) {
-  return {
-      
-    chooseNeighboringFilter : function (filtersList, direction) {
-      var normalizedDirection = direction < 0 ? -1 : 1;
-      var checkedElementIndex = 0;
+window.initializeFilters = (function () {
+    
+  function chooseNeighboringFilter(filtersList, direction) {
+    var normalizedDirection = direction < 0 ? -1 : 1;
+    var checkedElementIndex = 0;
 
-      for (var i = 0; i < filtersList.length; i++) {
-        if (filtersList[i].checked) {
-          checkedElementIndex = i;
-          break;
-        }
+    for (var i = 0; i < filtersList.length; i++) {
+      if (filtersList[i].checked) {
+        checkedElementIndex = i;
+        break;
       }
+    }
     checkedElementIndex += normalizedDirection;
     if (checkedElementIndex < 0) {
       checkedElementIndex = filtersList.length - 1;
@@ -21,13 +20,16 @@ window.initializeFilters = (function (image, targetClassForSelect, filterControl
     }
 
     filtersList[checkedElementIndex].click();
-   },
-
-    processFilterSelect : function (event) {
-      function setAriaPressedStatusByFilterName (filterName) {
+  }
+    
+  
+  function init(image, targetClassForSelect, filterControls, currentFilter){
+      
+      function setAriaPressedStatusByFilterName(filterName) {
         document.querySelector('input[value="' + filterName + '"]').labels[0].setAttribute('aria-pressed', status);
-      }  
-        
+      }
+   
+    function processFilterSelect(event) {
       if (event.target.type === 'radio' && event.target.name === targetClassForSelect && event.target.value !== currentFilter) {
         if (currentFilter !== 'none') {
           image.classList.remove('filter-' + currentFilter);
@@ -40,9 +42,14 @@ window.initializeFilters = (function (image, targetClassForSelect, filterControl
         setAriaPressedStatusByFilterName(currentFilter, true);
       }
     }
-  }; // конец объекта
+    
+    filterControls.addEventListener('click', processFilterSelect);   
+  }
+  return init;
   
-  return filterControls.addEventListener('click', processFilterSelect);
-
 })();
+
+
+
+
 
