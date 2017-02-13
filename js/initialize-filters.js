@@ -1,7 +1,7 @@
 'use strict';
 
 window.initializeFilters = (function () {
-    
+
   function chooseNeighboringFilter(filtersList, direction) {
     var normalizedDirection = direction < 0 ? -1 : 1;
     var checkedElementIndex = 0;
@@ -21,14 +21,13 @@ window.initializeFilters = (function () {
 
     filtersList[checkedElementIndex].click();
   }
-    
-  
-  function init(image, targetClassForSelect, filterControls, currentFilter){
-      
-      function setAriaPressedStatusByFilterName(filterName) {
-        document.querySelector('input[value="' + filterName + '"]').labels[0].setAttribute('aria-pressed', status);
-      }
-   
+
+  function init(image, targetClassForSelect, filterControls, currentFilter) {
+
+    function setAriaPressedStatusByFilterName(filterName) {
+      document.querySelector('input[value="' + filterName + '"]').labels[0].setAttribute('aria-pressed', status);
+    }
+
     function processFilterSelect(event) {
       if (event.target.type === 'radio' && event.target.name === targetClassForSelect && event.target.value !== currentFilter) {
         if (currentFilter !== 'none') {
@@ -42,14 +41,13 @@ window.initializeFilters = (function () {
         setAriaPressedStatusByFilterName(currentFilter, true);
       }
     }
-    
-    filterControls.addEventListener('click', processFilterSelect);   
+
+    filterControls.addEventListener('click', processFilterSelect);
   }
-  return init;
-  
+
+  return {
+    init: init,
+    chooseNeighboringFilter: chooseNeighboringFilter
+  };
+
 })();
-
-
-
-
-
