@@ -1,20 +1,27 @@
 'use strict';
+
 window.initializeScale = (function () {
 
-  function createScaleInit(buttonInc, buttonDec, IMAGE_RESIZE_STEP, image, uploadResizeControlsValue, currentScaleValue, MAX_IMAGE_SIZE, MIN_IMAGE_SIZE, callback) {
+  return function (image, buttonInc, buttonDec, currentScaleValue, MAX_IMAGE_SIZE, MIN_IMAGE_SIZE, IMAGE_RESIZE_STEP, imgScaleCallback) {
+    //  при нажатии на кнопку поля загрузки фоток, должно изменяться значение поля:
+    var uploadResizeControlsValue = document.querySelector('.upload-resize-controls-value');
+
+    function changeImgSize(modifier) {
+      var newValue = currentScaleValue + modifier;
+      if (newValue <= MAX_IMAGE_SIZE && newValue >= MIN_IMAGE_SIZE) {
+        uploadResizeControlsValue.value = newValue + '%';
+        currentScaleValue = newValue;
+        imgScaleCallback(image, newValue);
+      }
+    }
 
     buttonInc.addEventListener('click', function () {
-      callback(+IMAGE_RESIZE_STEP);
+      changeImgSize(+IMAGE_RESIZE_STEP);
     });
 
     buttonDec.addEventListener('click', function () {
-      callback(-IMAGE_RESIZE_STEP);
+      changeImgSize(-IMAGE_RESIZE_STEP);
     });
-
-    if (typeof this.callback === 'function') {
-      this.callback(image, uploadResizeControlsValue, currentScaleValue, MAX_IMAGE_SIZE, MIN_IMAGE_SIZE);
-    }
   }
 
-  return createScaleInit;
 })();
