@@ -68,13 +68,24 @@
   );
 
   // изменение масштаба
-  window.createScale(
-      document.querySelector('.filter-image-preview'),
+  window.initializeScale.createScaleInit(
       document.querySelector('.upload-resize-controls-button-inc'),
       document.querySelector('.upload-resize-controls-button-dec'),
-      100,
-      100,
       25,
-      25
+      function changeImgSize(
+      // modifier,
+      document.querySelector('.filter-image-preview'),
+      document.querySelector('.upload-resize-controls-value'),
+      100,
+      100,
+      25) {
+        var newValue = currentScaleValue + modifier;
+        if (newValue <= MAX_IMAGE_SIZE && newValue >= MIN_IMAGE_SIZE) {
+          uploadResizeControlsValue.value = newValue + '%';
+          image.style = 'transform:scale(' + newValue / 100 + ')';
+          currentScaleValue = newValue;
+        }
+      }
   );
+
 })();
