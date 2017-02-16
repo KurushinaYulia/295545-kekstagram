@@ -64,28 +64,28 @@
       document.querySelector('.filter-image-preview'),
       'upload-filter',
       document.querySelector('.upload-filter-controls'),
-      'none'
-  );
-
-  // изменение масштаба
-  window.initializeScale.createScaleInit(
-      document.querySelector('.upload-resize-controls-button-inc'),
-      document.querySelector('.upload-resize-controls-button-dec'),
-      25,
-      function changeImgSize(
-      // modifier,
-      document.querySelector('.filter-image-preview'),
-      document.querySelector('.upload-resize-controls-value'),
-      100,
-      100,
-      25) {
-        var newValue = currentScaleValue + modifier;
-        if (newValue <= MAX_IMAGE_SIZE && newValue >= MIN_IMAGE_SIZE) {
-          uploadResizeControlsValue.value = newValue + '%';
-          image.style = 'transform:scale(' + newValue / 100 + ')';
-          currentScaleValue = newValue;
+      'none',
+      function(image, currentFilter){
+        if (currentFilter !== 'none') {
+          image.classList.remove('filter-' + currentFilter);
+        }
+        if (currentFilter !== 'none') {
+          image.classList.add('filter-' + currentFilter);
         }
       }
   );
 
+   // изменение масштаба
+  window.initializeScale(
+      document.querySelector('.filter-image-preview'),
+      document.querySelector('.upload-resize-controls-button-inc'),
+      document.querySelector('.upload-resize-controls-button-dec'),
+      100,
+      100,
+      25,
+      25,
+      function (image, newValue){
+        image.style = 'transform:scale(' + newValue / 100 + ')';
+      }
+  );
 })();
