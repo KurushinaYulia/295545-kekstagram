@@ -48,14 +48,16 @@
     setFormKeysProcessingUp();
   });
   // закрытие формы кадрирования
-  uploadFormCancel.addEventListener('click', function () {
+  function closeForm() {
     uploadOverlay.classList.add('invisible');
     uploadSelectImage.classList.remove('invisible');
+  }
+  uploadFormCancel.addEventListener('click', function () {
+    closeForm();
   });
   uploadFormCancel.addEventListener('keydown', function (evt) {
     if (evt.keyCode && evt.keyCode === ENTER_KEY_CODE) {
-      uploadOverlay.classList.add('invisible');
-      uploadSelectImage.classList.remove('invisible');
+      closeForm();
     }
   });
 
@@ -84,7 +86,7 @@
       100,
       25,
       25,
-      function (image, newValue){
+      function (image, newValue) {
         image.style = 'transform:scale(' + newValue / 100 + ')';
       }
   );

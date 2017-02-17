@@ -22,6 +22,6 @@ window.initializeScale = (function () {
     buttonDec.addEventListener('click', function () {
       changeImgSize(-IMAGE_RESIZE_STEP);
     });
-  }
+  };
 
 })();
