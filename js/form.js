@@ -48,14 +48,16 @@
     setFormKeysProcessingUp();
   });
   // закрытие формы кадрирования
-  uploadFormCancel.addEventListener('click', function () {
+  function closeForm() {
     uploadOverlay.classList.add('invisible');
     uploadSelectImage.classList.remove('invisible');
+  }
+  uploadFormCancel.addEventListener('click', function () {
+    closeForm();
   });
   uploadFormCancel.addEventListener('keydown', function (evt) {
     if (evt.keyCode && evt.keyCode === ENTER_KEY_CODE) {
-      uploadOverlay.classList.add('invisible');
-      uploadSelectImage.classList.remove('invisible');
+      closeForm();
     }
   });
 
@@ -64,17 +66,28 @@
       document.querySelector('.filter-image-preview'),
       'upload-filter',
       document.querySelector('.upload-filter-controls'),
-      'none'
+      'none',
+      function (image, oldFilter, newFilter) {
+        if (oldFilter !== 'none') {
+          image.classList.remove('filter-' + oldFilter);
+        }
+        if (newFilter !== 'none') {
+          image.classList.add('filter-' + newFilter);
+        }
+      }
   );
 
-  // изменение масштаба
-  window.createScale(
+   // изменение масштаба
+  window.initializeScale(
       document.querySelector('.filter-image-preview'),
       document.querySelector('.upload-resize-controls-button-inc'),
       document.querySelector('.upload-resize-controls-button-dec'),
       100,
       100,
       25,
-      25
+      25,
+      function (image, newValue) {
+        image.style = 'transform:scale(' + newValue / 100 + ')';
+      }
   );
 })();
