@@ -22,7 +22,7 @@ window.initializeFilters = (function () {
     filtersList[checkedElementIndex].click();
   }
 
-  function init(image, targetClassForSelect, filterControls, currentFilter, /*imgFilterCallback,*/ imgFilterRemoveCallback, imgFilterAddCallback) {
+  function init(image, targetClassForSelect, filterControls, currentFilter, imgFilterCallback) {
 
     function setAriaPressedStatusByFilterName(filterName) {
       document.querySelector('input[value="' + filterName + '"]').labels[0].setAttribute('aria-pressed', status);
@@ -30,11 +30,9 @@ window.initializeFilters = (function () {
 
     function processFilterSelect(event) {
       if (event.target.type === 'radio' && event.target.name === targetClassForSelect && event.target.value !== currentFilter) {
-        imgFilterRemoveCallback(image, currentFilter);  
         setAriaPressedStatusByFilterName(currentFilter, false);
+        imgFilterCallback(image, currentFilter, event.target.value);
         currentFilter = event.target.value;
-        // imgFilterCallback(image, currentFilter);
-        imgFilterAddCallback(image, currentFilter);  
         setAriaPressedStatusByFilterName(currentFilter, true);
       }
     }

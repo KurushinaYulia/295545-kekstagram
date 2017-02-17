@@ -65,14 +65,12 @@
       'upload-filter',
       document.querySelector('.upload-filter-controls'),
       'none',
-      function(image, currentFilter){
-        if (currentFilter !== 'none') {
-          image.classList.remove('filter-' + currentFilter);
+      function (image, oldFilter, newFilter) {
+        if (oldFilter !== 'none') {
+          image.classList.remove('filter-' + oldFilter);
         }
-      },
-      function (image, currentFilter){
-        if (currentFilter !== 'none') {
-          image.classList.add('filter-' + currentFilter);
+        if (newFilter !== 'none') {
+          image.classList.add('filter-' + newFilter);
         }
       }
   );
