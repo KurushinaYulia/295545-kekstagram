@@ -69,6 +69,8 @@
         if (currentFilter !== 'none') {
           image.classList.remove('filter-' + currentFilter);
         }
+      },
+      function (image, currentFilter){
         if (currentFilter !== 'none') {
           image.classList.add('filter-' + currentFilter);
         }
