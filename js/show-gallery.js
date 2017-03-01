@@ -1,35 +1,38 @@
 'use strict';
 
-/*Создайте модуль show-gallery.js, который будет экспортировать в глобальную область видимости функцию showGallery. */
 window.showGallery = (function() {
-  /*Функция должна:
-  
-  показывать блок .gallery-overlay, убирая у него класс invisible*/
-  var galleryOverlay = querySelector('.gallery-overlay');
-  galleryOverlay.classList.remove('invisible');
-    
-  /*заполнять его данными, переданными через параметр*/
-  //??????????????????????????????????????????????
-  //??????????????????????????????????????????????
-  //??????????????????????????????????????????????
-  //??????????????????????????????????????????????
-  //??????????????????????????????????????????????
-
-  /*добавлять обработчик клика и клавиатурной активации блока .gallery-overlay-close, который будет скрывать блок .gallery-overlay*/
+ 
   var ENTER_KEY_CODE = 13;
-  var galleryOverlayClose = querySelector('.gallery-overlay-close');
+  var galleryOverlay = document.querySelector('.gallery-overlay');
+  var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
   
+  function processKey(evt) {
+    if (evt.keyCode && evt.keyCode === ENTER_KEY_CODE) {
+     closeGallery();
+    }
+  }
+
   function closeGallery() {
     galleryOverlay.classList.add('invisible');
+    galleryOverlayClose.removeEventListener('click', closeGallery);
+    galleryOverlayClose.removeEventListener('keydown', processKey);
   }
     
-  galleryOverlayClose.addEventListener('click', function() {
-      closeGallery();
-  });
-  galleryOverlayClose.addEventListener('keydown', function(evt) {
-      if (evt.keyCode && evt.keyCode === ENTER_KEY_CODE) {
-      closeGallery();
-    }
-  });
+  function showGallery(pictureData) {
+
+    var likesCount = document.querySelector('.likes-count');
+    var commentsCount = document.querySelector('.comments-count');
+    var galleryOverlayImage = document.querySelector('.gallery-overlay-image');
+
+    likesCount.innerHTML = pictureData.likes;
+    commentsCount.innerHTML = pictureData.comments.length;
+    galleryOverlayImage.src = pictureData.url;
+
+    galleryOverlayClose.addEventListener('click', closeGallery);
+    galleryOverlayClose.addEventListener('keydown', processKey);
+    galleryOverlay.classList.remove('invisible');
+  }
+
+  return showGallery;
     
 })();
