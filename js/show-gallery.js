@@ -1,14 +1,14 @@
 'use strict';
 
-window.showGallery = (function() {
- 
+window.showGallery = (function () {
+
   var ENTER_KEY_CODE = 13;
   var galleryOverlay = document.querySelector('.gallery-overlay');
   var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
-  
+
   function processKey(evt) {
     if (evt.keyCode && evt.keyCode === ENTER_KEY_CODE) {
-     closeGallery();
+      closeGallery();
     }
   }
 
@@ -17,7 +17,7 @@ window.showGallery = (function() {
     galleryOverlayClose.removeEventListener('click', closeGallery);
     galleryOverlayClose.removeEventListener('keydown', processKey);
   }
-    
+
   function showGallery(pictureData) {
 
     var likesCount = document.querySelector('.likes-count');
@@ -34,5 +34,5 @@ window.showGallery = (function() {
   }
 
   return showGallery;
-    
+
 })();
